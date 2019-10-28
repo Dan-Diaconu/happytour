@@ -3,7 +3,6 @@ import _ from "lodash"
 
 import { HotelListItem } from "./HotelListItem"
 import { FavoriteHotels } from "./FavoriteHotels"
-
 import { SearchHotel } from "./SearchHotel"
 
 export class MainInterfaceHotel extends React.Component {
@@ -15,6 +14,7 @@ export class MainInterfaceHotel extends React.Component {
             orderBy: 'name',
             sortDir: 'asc',
             searchText: '',
+            favorites: []
         }
     }
 
@@ -37,16 +37,13 @@ export class MainInterfaceHotel extends React.Component {
         return { displayBody: !prevState.displayBody }
     })
 
-    onNewAppointment = item => this.setState(prevState => {
-        prevState.appointments.push(item)
-        return { ...prevState }
-    })
 
     onSortChange = (orderBy, sortDir) => this.setState({ orderBy, sortDir })
 
     onSearch = searchText => this.setState({ searchText })
 
     render() {
+
         let filteredApts = this.state.appointments
         const orderBy = this.state.orderBy
         const sortDir = this.state.sortDir
@@ -72,8 +69,9 @@ export class MainInterfaceHotel extends React.Component {
         return (
             <div className="inderface">
                 <FavoriteHotels displayBody={displayBody}
-                    onNewAppointment={this.onNewAppointment}
                     onDisplayToggle={this.onDisplayToggle} />
+
+
                 <SearchHotel
                     orderBy={orderBy}
                     sortDir={sortDir}

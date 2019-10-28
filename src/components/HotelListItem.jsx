@@ -14,7 +14,7 @@ export class HotelListItem extends React.Component {
             <li className="hotel-item media">
                 <div className="media-left">
                     <button className="btn btn-xs hotel-delete btn-danger" onClick={this.onDelete}>
-                        <span className="glyphicon glyphicon-remove"></span>
+                        <span className="glyphicon glyphicon-pushpin"></span>
                     </button>
                 </div>
                 <div className="hotel-info media-body">

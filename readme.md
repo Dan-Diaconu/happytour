@@ -1,4 +1,4 @@
-# React Example of Wisdom Pet Medicine #
+# React Example | Interview Hotel #
 
 Events methods are implemented using the [public class fields](https://babeljs.io/docs/plugins/transform-class-properties/) syntax.
 
