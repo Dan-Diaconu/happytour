@@ -1,4 +1,4 @@
-# React Example #
+# eBerry web developer assignment #
 
 Events methods are implemented using the [public class fields](https://babeljs.io/docs/plugins/transform-class-properties/) syntax.
 
