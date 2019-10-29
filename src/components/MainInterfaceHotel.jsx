@@ -19,17 +19,26 @@ export class MainInterfaceHotel extends React.Component {
     }
 
     componentDidMount() {
-        // fetch('http://localhost:3000/data.json', { method: 'get' })
         fetch('http://localhost:3000/dataHotel.json', { method: 'get' })
             .then(response => response.json())
             .then(json => {
-                this.setState({ appointments : json })
+                this.setState({ appointments : json });
+
+  //              console.log('----componentDidMount--->', this.state.appointments)
             })       
     }
 
     onDelete = item => this.setState(prevState => {
         return {
-            appointments: _.without(prevState.appointments, item)
+            appointments: _.without(prevState.appointments, item),
+            favorites: [...this.state.favorites, item]
+        }
+    })
+
+    onDeleteFav = item => this.setState(prevState => {
+        return {
+            favorites: _.without(prevState.favorites, item),
+            appointments: [...this.state.appointments, item]
         }
     })
 
@@ -52,24 +61,31 @@ export class MainInterfaceHotel extends React.Component {
         filteredApts = searchText ? filteredApts.filter(item => {
             return (
                 _.includes(item.name.toLowerCase(), searchText) ||
-                _.includes(item.brandName.toLowerCase(), searchText) 
+                _.includes(item.brandName.toLowerCase(), searchText) ||
+                (item.address.city != null ? _.includes(item.address.city.toLowerCase(), searchText) : '' ) ||
+                (item.address.country != null ? _.includes(item.address.country.toLowerCase(), searchText)  : '' ) 
 //                || _.includes(item.manager.name.toLowerCase(), searchText)
-//                 || _.includes(item.openingDate, searchText) 
-//                 || _.includes(item.address.city, searchText)
+//                || _.includes(item.openingDate, searchText) 
             )
         }) : filteredApts
         filteredApts = _.orderBy(filteredApts, item => item[orderBy].toLowerCase(), sortDir)
         filteredApts = filteredApts.map((item, index) => {
             return (
                 <HotelListItem item={item} key={index} onDelete={this.onDelete} />
+
+                    /*                     
+                     <HotelListItem item={item} key={item.propertyCode} onDelete={this.onDelete} />
+                    */
+
             )
         })
 
         const displayBody = this.state.displayBody
+
         return (
-            <div className="inderface">
+            <div className="interface">
                 <FavoriteHotels displayBody={displayBody}
-                    onDisplayToggle={this.onDisplayToggle} />
+                    onDisplayToggle={this.onDisplayToggle} favorites ={this.state.favorites}/>
 
 
                 <SearchHotel
